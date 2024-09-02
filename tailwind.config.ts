@@ -7,7 +7,13 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'header-mobile': 'url(/header/mobile/bg-pattern-header.svg)',
+        'header-tablet': 'url(/header/tablet/bg-pattern-header.svg)',
+        'header-desktop': 'url(/header/desktop/bg-pattern-header.svg)',
+      },
+    },
   },
   plugins: [],
 };
