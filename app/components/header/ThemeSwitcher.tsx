@@ -6,7 +6,6 @@ import { RiComputerLine as SystemIcon } from 'react-icons/ri';
 import { GoSun as SunIcon } from 'react-icons/go';
 
 const ThemeSwitcher = ({ theme }: { theme: Theme }) => {
-  console.log(theme);
   return (
     <ul
       className="themeSwitcher flex justify-between items-center w-[5.8rem] p-1.5
