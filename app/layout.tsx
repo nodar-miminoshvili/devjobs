@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Kumbh_Sans } from 'next/font/google';
 import './globals.css';
 import Header from './components/header/Header';
+import { cookies } from 'next/headers';
 
 const kumbh = Kumbh_Sans({
   subsets: ['latin'],
@@ -20,10 +21,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = cookies().get('theme')?.value
+    ? (cookies().get('theme')!.value as 'dark' | 'light')
+    : 'system';
+
   return (
-    <html lang="en">
+    <html lang="en" className={theme}>
       <body className={kumbh.className}>
-        <Header />
+        <Header theme={theme} />
         {children}
       </body>
     </html>
