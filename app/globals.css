@@ -35,4 +35,9 @@
   .themeSwitcher li.active {
     @apply bg-indigo-400 text-yellow-400;
   }
+
+  .loginOptionButton {
+    @apply flex items-center w-4/5 py-2 rounded-md mx-auto justify-center gap-2 border 
+    hover:cursor-pointer transition-colors font-medium hover:bg-gray-400 hover:text-white;
+  }
 }

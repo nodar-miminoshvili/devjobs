@@ -9,7 +9,7 @@ const ThemeSwitcher = ({ theme }: { theme: Theme }) => {
   return (
     <ul
       className="themeSwitcher flex justify-between items-center w-[5.8rem] p-1.5
-        rounded-[100vw] border text-[1.125rem] text-white"
+        rounded-[100vw] border text-[1.125rem] text-white ml-auto mr-7"
     >
       <li className={`${theme === 'dark' && 'active'} `}>
         <button onClick={() => switchTheme('dark')}>
