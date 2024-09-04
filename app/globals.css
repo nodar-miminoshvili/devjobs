@@ -5,15 +5,26 @@
 @layer base {
   :root {
     --base-background: #f4f6f8;
+    --background-shade: #fff;
+    --text-primary: #19202d;
+    --text-secondary: #6e8098;
+    --text-teritary: #5964e0;
+    --listing-highlight: rgb(209 213 219 / 0.3);
   }
 
   html.dark {
     --base-background: #121721;
+    --background-shade: #19202d;
+    --text-primary: #fff;
+    --listing-highlight: rgb(55 65 81 / 0.5);
   }
 
   html.system {
     @media (prefers-color-scheme: dark) {
       --base-background: #121721;
+      --background-shade: #19202d;
+      --text-primary: #fff;
+      --listing-highlight: rgb(55 65 81 / 0.5);
     }
   }
 
