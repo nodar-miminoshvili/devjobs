@@ -10,6 +10,7 @@
     --text-secondary: #6e8098;
     --text-teritary: #5964e0;
     --listing-highlight: rgb(209 213 219 / 0.3);
+    --checkbox-unchecked: #19212e1a;
   }
 
   html.dark {
@@ -17,6 +18,7 @@
     --background-shade: #19202d;
     --text-primary: #fff;
     --listing-highlight: rgb(55 65 81 / 0.5);
+    --checkbox-unchecked: #ffffff1a;
   }
 
   html.system {
@@ -25,6 +27,7 @@
       --background-shade: #19202d;
       --text-primary: #fff;
       --listing-highlight: rgb(55 65 81 / 0.5);
+      --checkbox-unchecked: #ffffff1a;
     }
   }
 
@@ -36,6 +39,10 @@
 @layer utilities {
   .container {
     @apply max-w-screen-xl mx-auto;
+  }
+  .divide-right {
+    @apply after:content-[''] after:absolute after:w-px after:h-[5.125rem] after:bg-[#6e809833] 
+    after:top-1/2 after:right-0 after:-translate-y-1/2 after:hidden md:after:block;
   }
 }
 
@@ -50,5 +57,17 @@
   .loginOptionButton {
     @apply flex items-center w-4/5 py-2 rounded-md mx-auto justify-center gap-2 border 
     hover:cursor-pointer transition-colors font-medium hover:bg-gray-400 hover:text-white;
+  }
+
+  input[type='checkbox'] {
+    @apply opacity-0 cursor-pointer absolute;
+  }
+  input[type='checkbox'] + label {
+    @apply cursor-pointer flex items-center gap-3 before:content-[''] before:inline-block before:w-6 before:h-6 
+    before:rounded-[3px] before:bg-[var(--checkbox-unchecked)];
+  }
+
+  input[type='checkbox']:checked + label::before {
+    @apply bg-[var(--text-teritary)] bg-[url(/SearchBar/checkIcon.svg)] bg-no-repeat bg-center bg-[69%_auto];
   }
 }
