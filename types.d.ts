@@ -19,3 +19,9 @@ type Job = {
   logo: string;
   logoBackground: string;
 };
+
+type SearchParams = {
+  keywords?: string;
+  location?: string;
+  fullTime?: string;
+};
