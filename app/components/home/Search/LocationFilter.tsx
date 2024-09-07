@@ -2,15 +2,27 @@ import { useRef, useState } from 'react';
 import { FaLocationDot as LocationIcon } from 'react-icons/fa6';
 import { GrFormClose as ClearIcon } from 'react-icons/gr';
 
-const LocationFilter = ({ location }: { location: string | undefined }) => {
+const LocationFilter = ({
+  location,
+  unmount,
+  forMobile,
+}: {
+  location: string | undefined;
+  unmount?: boolean;
+  forMobile?: boolean;
+}) => {
   const [defaultSelected, setDefaultSelected] = useState(() => !location);
   const selectRef = useRef<HTMLSelectElement>(null);
+  if (unmount) return null;
   return (
-    <div className="min-w-[25%] hidden md:flex items-center gap-1 relative md:basis-1/3 divide-right">
-      <LocationIcon className="fill-[var(--text-teritary)] text-xl hidden md:block shrink-0" />
+    <div
+      className={`min-w-[25%] items-center md:basis-1/3
+                ${forMobile ? 'flex gap-3.5' : 'hidden md:flex relative divide-right gap-1'}`}
+    >
+      <LocationIcon className="fill-[var(--text-teritary)] text-xl shrink-0" />
       <select
         name="location"
-        className={`font-bold bg-inherit appearance-none outline-none cursor-pointer text-lg ${
+        className={`font-bold bg-inherit appearance-none outline-none cursor-pointer text-lg  ${
           defaultSelected && 'text-[#8c8f96] font-normal'
         }`}
         ref={selectRef}

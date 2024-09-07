@@ -7,11 +7,8 @@ const LoginPage = async () => {
   const user = await getUserFromCookie();
   if (user) return redirect('/');
   return (
-    <main
-      className="absolute top-0 left-0 -z-10 min-w-[100dvw] min-h-[100svh] bg-[var(--base-background)]
-                    grid place-items-center"
-    >
-      <div className="min-w-max px-5 py-6 min-h-72 bg-white  shadow-lg rounded-md text-center">
+    <main className="min-h-[calc(100dvh-136px)] md:min-h-[calc(100dvh-160px)] grid place-items-center">
+      <div className="min-w-max p-6 min-h-72 bg-[var(--background-shade)] text-[var(--text-primary)] shadow-lg rounded-md text-center">
         <h1 className="text-xl font-bold mb-3">Login</h1>
         <h2 className="font-medium">Choose your preferred login method</h2>
         <div className="mt-8 flex flex-col gap-3.5 ">

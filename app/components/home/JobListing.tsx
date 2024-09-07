@@ -13,7 +13,7 @@ const JobListing = ({ job }: { job: Job }) => {
           className="w-14 h-14 rounded-md absolute grid place-content-center top-0 -translate-y-1/2 "
           style={{ backgroundColor: job.logoBackground }}
         >
-          <Image src={job.logo} fill alt={job.company} className="object-scale-down" />
+          <Image src={job.logo} fill sizes="56px" alt={job.company} className="object-scale-down" />
         </div>
         <div className="flex gap-3">
           <p>4d ago</p>*<p>{job.fullTime ? 'Full Time' : 'Part Time'}</p>

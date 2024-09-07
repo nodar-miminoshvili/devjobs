@@ -55,8 +55,9 @@
   }
 
   .loginOptionButton {
-    @apply flex items-center w-4/5 py-2 rounded-md mx-auto justify-center gap-2 border 
-    hover:cursor-pointer transition-colors font-medium hover:bg-gray-400 hover:text-white;
+    @apply flex items-center w-4/5 py-2 rounded-md mx-auto justify-center gap-2 
+    border border-[var(--checkbox-unchecked)] hover:border-[var(--text-teritary)]
+    hover:cursor-pointer transition-colors font-medium hover:bg-[var(--text-teritary)] hover:text-white;
   }
 
   input[type='checkbox'] {

@@ -14,7 +14,7 @@ const GithubLoginButton = () => {
       }}
       className="loginOptionButton"
     >
-      <GithubIcon className="fill-black" /> Login with GitHub
+      <GithubIcon className="fill-[var(--text-primary)]" /> Login with GitHub
     </button>
   );
 };
