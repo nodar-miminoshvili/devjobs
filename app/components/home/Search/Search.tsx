@@ -27,6 +27,8 @@ const Search = () => {
       fullTime,
     };
 
+    params.set('page', '1');
+
     for (const [key, value] of Object.entries(queryParams)) {
       if (value) {
         params.set(key, value.toString());
@@ -60,7 +62,7 @@ const Search = () => {
           unmount={isFiltersModalOpen}
         />
         <FullTimeFilter isSelected={!!searchParams.get('fullTime')} unmount={isFiltersModalOpen} />
-        <button className="ml-auto w-fit md:hidden" onClick={handleOpenFilters}>
+        <button className="ml-auto w-fit md:hidden" type="button" onClick={handleOpenFilters}>
           <FilterIcon className="fill-[#6E8098] text-3xl" />
         </button>
         <button className="p-2.5 bg-[var(--text-teritary)] rounded-md text-white lg:px-6 md:ml-auto">

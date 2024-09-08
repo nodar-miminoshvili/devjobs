@@ -24,4 +24,5 @@ type SearchParams = {
   keywords?: string;
   location?: string;
   fullTime?: string;
+  page?: string;
 };

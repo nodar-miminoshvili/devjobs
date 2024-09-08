@@ -1,3 +1,4 @@
+import { countryCodeToFullName } from '@/utils/helperFunctions';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,7 +21,9 @@ const JobListing = ({ job }: { job: Job }) => {
         </div>
         <p className="text-xl font-bold text-[var(--text-primary)]">{job.position}</p>
         <p className="font-medium">{job.company}</p>
-        <p className="mt-auto text-[var(--text-teritary)] text-sm font-bold">{job.location}</p>
+        <p className="mt-auto text-[var(--text-teritary)] text-sm font-bold">
+          {countryCodeToFullName(job.location)}
+        </p>
       </Link>
     </li>
   );

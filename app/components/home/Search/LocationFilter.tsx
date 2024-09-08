@@ -33,9 +33,13 @@ const LocationFilter = ({
       >
         <option value="">Filter by location...</option>
         <option value="US">United States</option>
-        <option value="UK">United kingdom</option>
-        <option value="NZ">New Zeeland</option>
+        <option value="GB">United Kingdom</option>
+        <option value="PT">Portugal</option>
+        <option value="NL">Netherlands</option>
+        <option value="CA">Canada</option>
         <option value="JP">Japan</option>
+        <option value="AU">Australia</option>
+        <option value="NZ">New Zeeland</option>
       </select>
       {!defaultSelected && (
         <button
