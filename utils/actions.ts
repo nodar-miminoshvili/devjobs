@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import admin from '@/firebaseAdmin';
 import {
   CollectionReference,
+  QueryDocumentSnapshot,
   QueryFieldFilterConstraint,
   collection,
   getCountFromServer,
@@ -11,7 +12,7 @@ import {
   limit,
   orderBy,
   query,
-  startAt,
+  startAfter,
   where,
 } from 'firebase/firestore';
 import { db } from '@/firebaseConfig';
@@ -57,12 +58,13 @@ export const handleQuerySearch = async (searchParams: SearchParams, JOBS_PER_PAG
   if (fullTime) conditions.push(where('fullTime', '==', Boolean(fullTime)));
 
   const totalPages = await calculatePageCount(jobsRef, conditions, JOBS_PER_PAGE);
+  const lastDoc = await getLastDocumentRecursively(jobsRef, conditions, JOBS_PER_PAGE, currentPage);
 
   const q = query(
     jobsRef,
     ...conditions,
     orderBy('idx'),
-    startAt((currentPage - 1) * JOBS_PER_PAGE),
+    startAfter(lastDoc),
     limit(JOBS_PER_PAGE)
   );
 
@@ -81,4 +83,41 @@ const calculatePageCount = async (
   const totalPages = Math.round(totalCount / ITEMS_PER_PAGE);
 
   return totalPages;
+};
+
+const getLastDocumentRecursively = async (
+  collectionRef: CollectionReference,
+  itemsQuery: QueryFieldFilterConstraint[],
+  ITEMS_PER_PAGE: number,
+  pageNumber: number,
+  lastDoc: QueryDocumentSnapshot | null = null
+): Promise<QueryDocumentSnapshot | null> => {
+  if (pageNumber === 1) {
+    return null;
+  }
+
+  const q = lastDoc
+    ? query(
+        collectionRef,
+        ...itemsQuery,
+        orderBy('idx'),
+        startAfter(lastDoc),
+        limit(ITEMS_PER_PAGE)
+      )
+    : query(collectionRef, ...itemsQuery, orderBy('idx'), limit(ITEMS_PER_PAGE));
+
+  const querySnapshot = await getDocs(q);
+  const newLastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+  if (pageNumber === 2) {
+    return newLastDoc;
+  }
+
+  return await getLastDocumentRecursively(
+    collectionRef,
+    itemsQuery,
+    ITEMS_PER_PAGE,
+    pageNumber - 1,
+    newLastDoc
+  );
 };

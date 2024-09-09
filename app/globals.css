@@ -11,6 +11,7 @@
     --text-teritary: #5964e0;
     --listing-highlight: rgb(209 213 219 / 0.3);
     --checkbox-unchecked: #19212e1a;
+    --button-highlight: #939bf4;
   }
 
   html.dark {

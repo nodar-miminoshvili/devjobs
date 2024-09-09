@@ -65,7 +65,10 @@ const Search = () => {
         <button className="ml-auto w-fit md:hidden" type="button" onClick={handleOpenFilters}>
           <FilterIcon className="fill-[#6E8098] text-3xl" />
         </button>
-        <button className="p-2.5 bg-[var(--text-teritary)] rounded-md text-white lg:px-6 md:ml-auto">
+        <button
+          className="p-2.5 bg-[var(--text-teritary)] rounded-md text-white lg:px-6 md:ml-auto 
+                    transition-colors hover:bg-[var(--button-highlight)]"
+        >
           <SearchIcon className="text-3xl lg:hidden" />
           <span className="hidden lg:block text-lg font-bold">Search</span>
         </button>
