@@ -1,7 +1,7 @@
 type Theme = 'dark' | 'system' | 'light';
 
 type Job = {
-  id: number;
+  id: string;
   company: string;
   position: string;
   fullTime: boolean;

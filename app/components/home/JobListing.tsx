@@ -6,7 +6,7 @@ const JobListing = ({ job }: { job: Job }) => {
   return (
     <li>
       <Link
-        href="/"
+        href={`/${job.id}`}
         className="w-full h-full px-6 pt-12 pb-6 flex flex-col gap-3 bg-[var(--background-shade)] rounded-md text-[var(--text-secondary)] relative
       transition-colors hover:shadow-sm hover:bg-[var(--listing-highlight)]"
       >

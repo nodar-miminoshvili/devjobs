@@ -12,6 +12,9 @@
     --listing-highlight: rgb(209 213 219 / 0.3);
     --checkbox-unchecked: #19212e1a;
     --button-highlight: #939bf4;
+    --button-light-bg: #eeeffc;
+    --button-light-text: #5964e0;
+    --button-light-hover-bg: #c5c9f4;
   }
 
   html.dark {
@@ -20,6 +23,9 @@
     --text-primary: #fff;
     --listing-highlight: rgb(55 65 81 / 0.5);
     --checkbox-unchecked: #ffffff1a;
+    --button-light-bg: #303642;
+    --button-light-text: #fff;
+    --button-light-hover-bg: #525861;
   }
 
   html.system {
@@ -29,6 +35,9 @@
       --text-primary: #fff;
       --listing-highlight: rgb(55 65 81 / 0.5);
       --checkbox-unchecked: #ffffff1a;
+      --button-light-bg: #303642;
+      --button-light-text: #fff;
+      --button-light-hover-bg: #525861;
     }
   }
 
@@ -71,5 +80,10 @@
 
   input[type='checkbox']:checked + label::before {
     @apply bg-[var(--text-teritary)] bg-[url(/SearchBar/checkIcon.svg)] bg-no-repeat bg-center bg-[69%_auto];
+  }
+
+  .ApplyButton {
+    @apply block text-center px-6 py-3 font-bold rounded-md text-white
+    bg-[var(--text-teritary)] transition-colors hover:bg-[var(--button-highlight)] hover:text-[#19202d];
   }
 }
