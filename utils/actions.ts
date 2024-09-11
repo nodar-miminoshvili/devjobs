@@ -7,7 +7,9 @@ import {
   QueryDocumentSnapshot,
   QueryFieldFilterConstraint,
   collection,
+  doc,
   getCountFromServer,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -120,4 +122,11 @@ const getLastDocumentRecursively = async (
     pageNumber - 1,
     newLastDoc
   );
+};
+
+export const getJobDetailsById = async (jobId: string) => {
+  const docRef = doc(db, 'jobs', jobId);
+  const docSnap = await getDoc(docRef);
+  const job = { ...docSnap.data(), id: docSnap.id } as Job;
+  return job;
 };

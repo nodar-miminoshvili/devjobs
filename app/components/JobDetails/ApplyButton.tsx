@@ -1,17 +1,14 @@
+'use client';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const ApplyButton = ({ user }: { user: DecodedIdToken | null }) => {
+  const pathname = usePathname();
   return (
-    <>
-      {user ? (
-        <button className="ApplyButton">Apply Now</button>
-      ) : (
-        <Link href="/login" className="ApplyButton">
-          Apply Now
-        </Link>
-      )}
-    </>
+    <Link href={user ? `${pathname}/apply` : '/login'} className="ApplyButton">
+      Apply Now
+    </Link>
   );
 };
 

@@ -1,15 +1,11 @@
-import { db } from '@/firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
 import CompanyBanner from '../components/JobDetails/CompanyBanner';
 import JobDetails from '../components/JobDetails/JobDetails';
-import { getUserFromCookie } from '@/utils/actions';
+import { getJobDetailsById, getUserFromCookie } from '@/utils/actions';
 import JobDetailsFooter from '../components/JobDetails/JobDetailsFooter';
 
 const JobPage = async ({ params }: { params: { jobId: string } }) => {
-  const docRef = doc(db, 'jobs', params.jobId);
-  const docSnap = await getDoc(docRef);
   const user = await getUserFromCookie();
-  const job = { ...docSnap.data(), id: docSnap.id } as Job;
+  const job = await getJobDetailsById(params.jobId);
 
   return (
     <div className="flex flex-col gap-10 2xl:min-h-[calc(100dvh-160px)]">
