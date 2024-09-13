@@ -46,7 +46,7 @@ const ApplyPage = async ({ params }: { params: { jobId: string } }) => {
             {job.fullTime ? 'Full-Time' : 'Part-Time'}
           </h5>
         </div>
-        <ApplicationForm jobId={job.id} userId={user.uid} />
+        <ApplicationForm jobId={job.id} />
       </div>
     </main>
   );

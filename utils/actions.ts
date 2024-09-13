@@ -6,6 +6,7 @@ import {
   CollectionReference,
   QueryDocumentSnapshot,
   QueryFieldFilterConstraint,
+  Timestamp,
   collection,
   doc,
   getCountFromServer,
@@ -14,6 +15,7 @@ import {
   limit,
   orderBy,
   query,
+  setDoc,
   startAfter,
   where,
 } from 'firebase/firestore';
@@ -129,4 +131,19 @@ export const getJobDetailsById = async (jobId: string) => {
   const docSnap = await getDoc(docRef);
   const job = { ...docSnap.data(), id: docSnap.id } as Job;
   return job;
+};
+
+export const applyToJob = async (fullName: string, jobId: string) => {
+  const user = await getUserFromCookie();
+  if (!user) throw new Error('Invalid Job Application Request. Authorization is required.');
+  const userId = user.uid;
+  await setDoc(
+    doc(db, 'applications', userId),
+    {
+      author_uid: userId,
+      fullName,
+      jobsApplied: [{ jobId, appliedAt: Timestamp.now() }],
+    },
+    { merge: true }
+  );
 };
