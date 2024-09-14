@@ -2,25 +2,12 @@
 
 import { cookies } from 'next/headers';
 import admin from '@/firebaseAdmin';
-import {
-  CollectionReference,
-  QueryDocumentSnapshot,
-  QueryFieldFilterConstraint,
-  Timestamp,
-  collection,
-  doc,
-  getCountFromServer,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  setDoc,
-  startAfter,
-  where,
-} from 'firebase/firestore';
-import { db } from '@/firebaseConfig';
 import { keywordsStrIntoArr } from './helperFunctions';
+import { FieldValue, Timestamp } from 'firebase-admin/firestore';
+
+const JOBS_PER_PAGE = 2;
+const jobsRef = admin.firestore().collection('jobs');
+const applicaitonsRef = admin.firestore().collection('applications');
 
 export const switchTheme = (theme: Theme) => {
   theme === 'system' ? cookies().delete('theme') : cookies().set('theme', theme);
@@ -49,86 +36,56 @@ export async function getUserFromCookie() {
   return null;
 }
 
-export const handleQuerySearch = async (searchParams: SearchParams, JOBS_PER_PAGE: number) => {
-  const jobsRef = collection(db, 'jobs');
+export const handleQuerySearch = async (searchParams: SearchParams) => {
   const currentPage = searchParams.page ? Number(searchParams.page) : 1;
 
   const { keywords, location, fullTime } = searchParams;
-  const conditions: QueryFieldFilterConstraint[] = [];
+
+  let queryRef = jobsRef.orderBy('idx');
 
   if (keywords)
-    conditions.push(where('keywords', 'array-contains-any', keywordsStrIntoArr(keywords)));
-  if (location) conditions.push(where('location', '==', location));
-  if (fullTime) conditions.push(where('fullTime', '==', Boolean(fullTime)));
+    queryRef = queryRef.where('keywords', 'array-contains-any', keywordsStrIntoArr(keywords));
+  if (location) queryRef = queryRef.where('location', '==', location);
+  if (fullTime) queryRef = queryRef.where('fullTime', '==', Boolean(fullTime));
 
-  const totalPages = await calculatePageCount(jobsRef, conditions, JOBS_PER_PAGE);
-  const lastDoc = await getLastDocumentRecursively(jobsRef, conditions, JOBS_PER_PAGE, currentPage);
+  const totalPages = await calculatePageCount(queryRef);
 
-  const q = query(
-    jobsRef,
-    ...conditions,
-    orderBy('idx'),
-    startAfter(lastDoc),
-    limit(JOBS_PER_PAGE)
-  );
+  const lastDoc = await getLastDocumentRecursively(queryRef, currentPage);
 
-  const querySnapshot = await getDocs(q);
+  queryRef = queryRef.startAfter(lastDoc).limit(JOBS_PER_PAGE);
+
+  const querySnapshot = await queryRef.get();
   return { querySnapshot, totalPages };
 };
 
-const calculatePageCount = async (
-  collectionRef: CollectionReference,
-  itemsQuery: QueryFieldFilterConstraint[],
-  ITEMS_PER_PAGE: number
-) => {
-  const q = query(collectionRef, ...itemsQuery);
-  const snapshot = await getCountFromServer(q);
-  const totalCount = snapshot.data().count;
-  const totalPages = Math.round(totalCount / ITEMS_PER_PAGE);
+const calculatePageCount = async (jobsQuery: admin.firestore.Query) => {
+  const totalCount = await jobsQuery.count().get();
+  const totalPages = Math.round(totalCount.data().count / JOBS_PER_PAGE);
 
   return totalPages;
 };
 
 const getLastDocumentRecursively = async (
-  collectionRef: CollectionReference,
-  itemsQuery: QueryFieldFilterConstraint[],
-  ITEMS_PER_PAGE: number,
+  jobsQuery: admin.firestore.Query,
   pageNumber: number,
-  lastDoc: QueryDocumentSnapshot | null = null
-): Promise<QueryDocumentSnapshot | null> => {
-  if (pageNumber === 1) {
-    return null;
-  }
+  lastDoc: admin.firestore.QueryDocumentSnapshot | null = null
+): Promise<admin.firestore.QueryDocumentSnapshot | null> => {
+  if (pageNumber === 1) return null;
 
   const q = lastDoc
-    ? query(
-        collectionRef,
-        ...itemsQuery,
-        orderBy('idx'),
-        startAfter(lastDoc),
-        limit(ITEMS_PER_PAGE)
-      )
-    : query(collectionRef, ...itemsQuery, orderBy('idx'), limit(ITEMS_PER_PAGE));
+    ? jobsQuery.startAfter(lastDoc).limit(JOBS_PER_PAGE)
+    : jobsQuery.limit(JOBS_PER_PAGE);
 
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await q.get();
   const newLastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-  if (pageNumber === 2) {
-    return newLastDoc;
-  }
+  if (pageNumber === 2) return newLastDoc;
 
-  return await getLastDocumentRecursively(
-    collectionRef,
-    itemsQuery,
-    ITEMS_PER_PAGE,
-    pageNumber - 1,
-    newLastDoc
-  );
+  return await getLastDocumentRecursively(jobsQuery, pageNumber - 1, newLastDoc);
 };
 
 export const getJobDetailsById = async (jobId: string) => {
-  const docRef = doc(db, 'jobs', jobId);
-  const docSnap = await getDoc(docRef);
+  const docSnap = await jobsRef.doc(jobId).get();
   const job = { ...docSnap.data(), id: docSnap.id } as Job;
   return job;
 };
@@ -137,13 +94,25 @@ export const applyToJob = async (fullName: string, jobId: string) => {
   const user = await getUserFromCookie();
   if (!user) throw new Error('Invalid Job Application Request. Authorization is required.');
   const userId = user.uid;
-  await setDoc(
-    doc(db, 'applications', userId),
-    {
-      author_uid: userId,
+  const docRef = applicaitonsRef.doc(userId);
+  const docSnap = await docRef.get();
+
+  if (docSnap.exists) {
+    await docRef.update({
+      jobsApplied: FieldValue.arrayUnion(jobId),
+      jobsAppliedWithTimestamps: FieldValue.arrayUnion({
+        appliedJobRef: admin.firestore().doc('jobs/' + jobId),
+        appliedAt: Timestamp.now(),
+      }),
+    });
+  } else {
+    await docRef.set({
       fullName,
-      jobsApplied: [{ jobId, appliedAt: Timestamp.now() }],
-    },
-    { merge: true }
-  );
+      jobsApplied: [jobId],
+      jobsAppliedWithTimestamps: FieldValue.arrayUnion({
+        appliedJobRef: admin.firestore().doc('jobs/' + jobId),
+        appliedAt: Timestamp.now(),
+      }),
+    });
+  }
 };
