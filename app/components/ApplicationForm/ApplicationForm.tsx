@@ -15,10 +15,8 @@ const ApplicationForm = ({ jobId }: { jobId: string }) => {
   const handleApply = async (formData: FormData) => {
     const fullName = formData.get('fullName');
     if (typeof fullName !== 'string') return;
-    setisLoading(true);
 
     await applyToJob(fullName, jobId);
-
     setisLoading(false);
     setIsSubmittedSuccessfully(true);
   };
@@ -94,7 +92,7 @@ const ApplicationForm = ({ jobId }: { jobId: string }) => {
           </div>
         </div>
 
-        <button className="ApplyButton mt-4">
+        <button onClick={() => setisLoading(true)} className="ApplyButton mt-4">
           {!isLoading ? 'Apply' : <SpinnerIcon className="animate-spin text-2xl mx-auto" />}
         </button>
       </form>

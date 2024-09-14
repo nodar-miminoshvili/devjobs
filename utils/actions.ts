@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers';
 import admin from '@/firebaseAdmin';
 import { keywordsStrIntoArr } from './helperFunctions';
-import { FieldValue, Timestamp } from 'firebase-admin/firestore';
+import { DocumentReference, FieldValue, Timestamp } from 'firebase-admin/firestore';
 
 const JOBS_PER_PAGE = 2;
 const jobsRef = admin.firestore().collection('jobs');
@@ -115,4 +115,23 @@ export const applyToJob = async (fullName: string, jobId: string) => {
       }),
     });
   }
+};
+
+type JobApplications = {
+  fullName: string;
+  jobsApplied: string[];
+  jobsAppliedWithTimestamps: [
+    {
+      appliedJobRef: DocumentReference;
+      appliedAt: Timestamp;
+    }
+  ];
+};
+
+export const checkIfUserApplied = async (userId: string, jobId: string) => {
+  const docSnap = await applicaitonsRef.doc(userId).get();
+
+  const jobApplications = docSnap.data() as JobApplications;
+
+  return jobApplications.jobsApplied.includes(jobId);
 };

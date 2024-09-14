@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { LuCheckCircle as Successicon } from 'react-icons/lu';
 
 const SuccesMessage = () => {
+  const { refresh } = useRouter();
   const successModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -10,7 +12,7 @@ const SuccesMessage = () => {
       successModalRef.current.scrollIntoView({
         block: 'center',
         inline: 'center',
-        behavior: 'smooth',
+        behavior: 'instant',
       });
       document.body.style.overflowY = 'hidden';
     }
@@ -18,6 +20,7 @@ const SuccesMessage = () => {
 
   const enableScroll = () => {
     document.body.style.overflowY = 'auto';
+    refresh();
   };
   return (
     <>
@@ -30,7 +33,7 @@ const SuccesMessage = () => {
         data-success-modal
         ref={successModalRef}
         className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 w-max max-w-[min(90dvw,25rem)] p-8 h-max
-       bg-[--background-shade]"
+       bg-[--background-shade] rounded-md"
       >
         <p className="flex items-center gap-3 text-xl">
           <Successicon className="text-[--text-teritary] text-2xl" />

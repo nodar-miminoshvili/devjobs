@@ -6,9 +6,10 @@ import ApplyButton from './ApplyButton';
 type Props = {
   jobDetails: Job;
   user: DecodedIdToken | null;
+  isApplied: boolean;
 };
 
-const JobDetails = ({ jobDetails: job, user }: Props) => {
+const JobDetails = ({ jobDetails: job, user, isApplied }: Props) => {
   return (
     <div className="bg-[var(--background-shade)] rounded-md mt-10 px-5 pt-10 pb-12 md:px-8">
       <div className="md:flex items-center justify-between ">
@@ -25,7 +26,7 @@ const JobDetails = ({ jobDetails: job, user }: Props) => {
             {countryCodeToFullName(job.location)}
           </p>
         </div>
-        <ApplyButton user={user} />
+        <ApplyButton user={user} isApplied={isApplied} />
       </div>
       <p className="mt-10">{job.description}</p>
       <div className="mt-8">

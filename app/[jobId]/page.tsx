@@ -1,11 +1,12 @@
 import CompanyBanner from '../components/JobDetails/CompanyBanner';
 import JobDetails from '../components/JobDetails/JobDetails';
-import { getJobDetailsById, getUserFromCookie } from '@/utils/actions';
+import { checkIfUserApplied, getJobDetailsById, getUserFromCookie } from '@/utils/actions';
 import JobDetailsFooter from '../components/JobDetails/JobDetailsFooter';
 
 const JobPage = async ({ params }: { params: { jobId: string } }) => {
   const user = await getUserFromCookie();
   const job = await getJobDetailsById(params.jobId);
+  const isApplied = user ? await checkIfUserApplied(user.uid, params.jobId) : false;
 
   return (
     <div className="flex flex-col gap-10 2xl:min-h-[calc(100dvh-160px)]">
@@ -20,9 +21,14 @@ const JobPage = async ({ params }: { params: { jobId: string } }) => {
             logoBackground: job.logoBackground,
           }}
         />
-        <JobDetails jobDetails={job} user={user} />
+        <JobDetails jobDetails={job} user={user} isApplied={isApplied} />
       </main>
-      <JobDetailsFooter user={user} company={job.company} position={job.position} />
+      <JobDetailsFooter
+        user={user}
+        company={job.company}
+        position={job.position}
+        isApplied={isApplied}
+      />
     </div>
   );
 };

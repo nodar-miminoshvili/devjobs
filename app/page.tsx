@@ -5,8 +5,7 @@ import Pagination from './components/home/Pagination/Pagination';
 import { handleQuerySearch } from '@/utils/actions';
 
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
-  const JOBS_PER_PAGE = 2;
-  const { querySnapshot, totalPages } = await handleQuerySearch(searchParams, JOBS_PER_PAGE);
+  const { querySnapshot, totalPages } = await handleQuerySearch(searchParams);
   const jobs: unknown = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
   return (

@@ -1,5 +1,5 @@
 import ApplicationForm from '@/app/components/ApplicationForm/ApplicationForm';
-import { getJobDetailsById, getUserFromCookie } from '@/utils/actions';
+import { checkIfUserApplied, getJobDetailsById, getUserFromCookie } from '@/utils/actions';
 import { redirect } from 'next/navigation';
 import { countryCodeToFullName } from '@/utils/helperFunctions';
 import { MdLocationOn as Locationicon } from 'react-icons/md';
@@ -9,6 +9,10 @@ import Image from 'next/image';
 const ApplyPage = async ({ params }: { params: { jobId: string } }) => {
   const user = await getUserFromCookie();
   if (!user) redirect('/');
+
+  const isApplied = await checkIfUserApplied(user.uid, params.jobId);
+  if (isApplied) redirect('/');
+
   const job = await getJobDetailsById(params.jobId);
 
   return (
