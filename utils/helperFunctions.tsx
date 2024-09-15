@@ -18,3 +18,19 @@ export const countryCodeToFullName = (countryCode: string) => {
     ? countryCodes[countryCode as keyof typeof countryCodes]
     : '';
 };
+
+export const generateSuspenseKeys = (
+  searchParams: SearchParams,
+  type: 'pagination' | 'job-list'
+) => {
+  let suspenseKey = type === 'pagination' ? 'pag' : 'list';
+
+  const searchParamsCopy = { ...searchParams };
+
+  if (type === 'pagination') delete searchParamsCopy.page;
+
+  for (const [key, value] of Object.entries(searchParamsCopy)) {
+    suspenseKey = `${suspenseKey}-${key}/${value}`;
+  }
+  return suspenseKey;
+};

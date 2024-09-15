@@ -1,19 +1,31 @@
-import Logout from './components/Logout';
 import JobList from './components/home/JobList';
 import Search from './components/home/Search/Search';
-import Pagination from './components/home/Pagination/Pagination';
-import { handleQuerySearch } from '@/utils/actions';
+import { Suspense } from 'react';
+import Logout from './components/Logout';
+import JobListLoader from './components/home/JobListLoader';
+import PaginationWrapper from './components/home/Pagination/PaginationWrapper';
+import { generateSuspenseKeys } from '@/utils/helperFunctions';
+import PaginationLoader from './components/home/Pagination/PaginationLoader';
 
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
-  const { querySnapshot, totalPages } = await handleQuerySearch(searchParams);
-  const jobs: unknown = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-
   return (
     <main className="container pb-4 flex flex-col min-h-[calc(100dvh-136px)] md:min-h-[calc(100dvh-160px)]">
       <Search />
-      <JobList jobs={jobs as Job[]} />
+
+      <Suspense
+        key={generateSuspenseKeys(searchParams, 'job-list')}
+        fallback={<JobListLoader placeholdersToRender={2} />}
+      >
+        <JobList searchParams={searchParams} />
+      </Suspense>
       <Logout />
-      <Pagination totalPages={totalPages} />
+
+      <Suspense
+        key={generateSuspenseKeys(searchParams, 'pagination')}
+        fallback={<PaginationLoader />}
+      >
+        <PaginationWrapper searchParams={searchParams} />
+      </Suspense>
     </main>
   );
 }

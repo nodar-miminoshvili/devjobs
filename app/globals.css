@@ -86,4 +86,33 @@
     @apply block text-center px-6 py-3 font-bold rounded-md text-white
     bg-[var(--text-teritary)] transition-colors hover:bg-[var(--button-highlight)] hover:text-[#19202d];
   }
+
+  div.job-placeholder div {
+    @apply rounded-md bg-[var(--button-light-bg)];
+  }
+
+  div.pagination-placeholder div {
+    @apply w-3 h-3 rounded-full bg-[--button-highlight] opacity-75;
+
+    animation: jump 2s linear infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+    &:nth-child(3) {
+      animation-delay: 1s;
+    }
+    &:nth-child(4) {
+      animation-delay: 1.5s;
+    }
+  }
+
+  @keyframes jump {
+    15% {
+      transform: translateY(-10px);
+    }
+    25% {
+      transform: translateY(0);
+    }
+  }
 }

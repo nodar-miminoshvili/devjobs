@@ -12,7 +12,7 @@ const Search = () => {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const handleSearch = (formData: FormData) => {
     const keywords = formData.get('keywords');
@@ -37,7 +37,7 @@ const Search = () => {
       }
     }
 
-    replace(`${pathname}?${params.toString()}`);
+    push(`${pathname}?${params.toString()}`);
   };
 
   const handleOpenFilters = () => {
@@ -57,14 +57,18 @@ const Search = () => {
                 text-[var(--text-primary)] -translate-y-1/2"
       >
         <KeywordsFilter keywords={searchParams.get('keywords')?.toString()} />
+
         <LocationFilter
           location={searchParams.get('location')?.toString()}
           unmount={isFiltersModalOpen}
         />
+
         <FullTimeFilter isSelected={!!searchParams.get('fullTime')} unmount={isFiltersModalOpen} />
+
         <button className="ml-auto w-fit md:hidden" type="button" onClick={handleOpenFilters}>
           <FilterIcon className="fill-[#6E8098] text-3xl" />
         </button>
+
         <button
           className="p-2.5 bg-[var(--text-teritary)] rounded-md text-white lg:px-6 md:ml-auto 
                     transition-colors hover:bg-[var(--button-highlight)]"
@@ -73,6 +77,7 @@ const Search = () => {
           <span className="hidden lg:block text-lg font-bold">Search</span>
         </button>
       </div>
+
       {isFiltersModalOpen && (
         <MobileFiltersModal handleCloseFilters={handleCloseFilters}>
           <LocationFilter location={searchParams.get('location')?.toString()} forMobile />

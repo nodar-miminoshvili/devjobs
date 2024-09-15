@@ -35,10 +35,7 @@ export async function getUserFromCookie() {
 
   return null;
 }
-
-export const handleQuerySearch = async (searchParams: SearchParams) => {
-  const currentPage = searchParams.page ? Number(searchParams.page) : 1;
-
+export const generateQueryRef = async (searchParams: SearchParams) => {
   const { keywords, location, fullTime } = searchParams;
 
   let queryRef = jobsRef.orderBy('idx');
@@ -48,18 +45,25 @@ export const handleQuerySearch = async (searchParams: SearchParams) => {
   if (location) queryRef = queryRef.where('location', '==', location);
   if (fullTime) queryRef = queryRef.where('fullTime', '==', Boolean(fullTime));
 
-  const totalPages = await calculatePageCount(queryRef);
+  return queryRef;
+};
+
+export const handleQuerySearch = async (searchParams: SearchParams) => {
+  const currentPage = searchParams.page ? Number(searchParams.page) : 1;
+
+  let queryRef = await generateQueryRef(searchParams);
 
   const lastDoc = await getLastDocumentRecursively(queryRef, currentPage);
 
   queryRef = queryRef.startAfter(lastDoc).limit(JOBS_PER_PAGE);
 
   const querySnapshot = await queryRef.get();
-  return { querySnapshot, totalPages };
+  return { querySnapshot };
 };
 
-const calculatePageCount = async (jobsQuery: admin.firestore.Query) => {
-  const totalCount = await jobsQuery.count().get();
+export const calculatePageCount = async (searchParams: SearchParams) => {
+  const queryRef = await generateQueryRef(searchParams);
+  const totalCount = await queryRef.count().get();
   const totalPages = Math.round(totalCount.data().count / JOBS_PER_PAGE);
 
   return totalPages;
