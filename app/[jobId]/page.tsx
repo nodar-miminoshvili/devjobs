@@ -12,7 +12,7 @@ const JobPage = async ({ params }: { params: { jobId: string } }) => {
     <div className="flex flex-col gap-10 2xl:min-h-[calc(100dvh-160px)]">
       <main
         className="max-w-screen-md mx-auto relative -translate-y-3 px-4 
-      bag-red-300 min-h-96 text-[var(--text-secondary)] md:-translate-y-10"
+                  min-h-96 text-[var(--text-secondary)] md:-translate-y-10"
       >
         <CompanyBanner
           companyDetails={{

@@ -135,7 +135,10 @@ type JobApplications = {
 export const checkIfUserApplied = async (userId: string, jobId: string) => {
   const docSnap = await applicaitonsRef.doc(userId).get();
 
-  const jobApplications = docSnap.data() as JobApplications;
+  if (docSnap.exists) {
+    const jobApplications = docSnap.data() as JobApplications;
+    return jobApplications.jobsApplied.includes(jobId);
+  }
 
-  return jobApplications.jobsApplied.includes(jobId);
+  return false;
 };

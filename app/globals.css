@@ -115,4 +115,12 @@
       transform: translateY(0);
     }
   }
+
+  div.details-placeholder div.placeholder-box,
+  div.details-placeholder div.placeholder-box-plain {
+    @apply bg-[var(--button-light-bg)] rounded-md;
+  }
+  div.details-placeholder div.placeholder-box {
+    @apply animate-pulse;
+  }
 }
