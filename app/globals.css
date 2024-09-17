@@ -117,7 +117,8 @@
   }
 
   div.details-placeholder div.placeholder-box,
-  div.details-placeholder div.placeholder-box-plain {
+  div.details-placeholder div.placeholder-box-plain,
+  div.application-placeholder div:empty {
     @apply bg-[var(--button-light-bg)] rounded-md;
   }
   div.details-placeholder div.placeholder-box {
