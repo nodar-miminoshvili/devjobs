@@ -1,7 +1,6 @@
 import JobList from './components/home/JobList';
 import Search from './components/home/Search/Search';
 import { Suspense } from 'react';
-import Logout from './components/Logout';
 import JobListLoader from './components/home/JobListLoader';
 import PaginationWrapper from './components/home/Pagination/PaginationWrapper';
 import { generateSuspenseKeys } from '@/utils/helperFunctions';
@@ -18,7 +17,6 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       >
         <JobList searchParams={searchParams} />
       </Suspense>
-      <Logout />
 
       <Suspense
         key={generateSuspenseKeys(searchParams, 'pagination')}

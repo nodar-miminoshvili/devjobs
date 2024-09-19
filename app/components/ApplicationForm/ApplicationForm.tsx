@@ -24,6 +24,7 @@ const ApplicationForm = ({ jobId }: { jobId: string }) => {
   return (
     <>
       <form
+        onSubmit={() => setisLoading(true)}
         action={e => handleApply(e)}
         className="flex flex-col gap-6 mt-6 text-[--text-primary] w-full"
       >
@@ -92,7 +93,7 @@ const ApplicationForm = ({ jobId }: { jobId: string }) => {
           </div>
         </div>
 
-        <button onClick={() => setisLoading(true)} className="ApplyButton mt-4">
+        <button className="ApplyButton mt-4">
           {!isLoading ? 'Apply' : <SpinnerIcon className="animate-spin text-2xl mx-auto" />}
         </button>
       </form>
