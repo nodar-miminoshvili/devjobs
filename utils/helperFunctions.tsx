@@ -34,3 +34,25 @@ export const generateSuspenseKeys = (
   }
   return suspenseKey;
 };
+
+export const displayPostTime = (postTimeeInSeconds: number) => {
+  const currentTimeInSeconds = Math.round(Date.now() / 1000);
+  const timeDiffInSeconds = currentTimeInSeconds - postTimeeInSeconds;
+  const timeDiffInDays = Math.round(timeDiffInSeconds / (3600 * 24));
+
+  const pluralFormIfnecessary = (num: number, str: string) => {
+    return num > 1 ? `${str}s ago` : `${str} ago`;
+  };
+
+  if (timeDiffInDays > 365) {
+    const yearsDiff = Math.floor(timeDiffInDays / 365);
+    return `${yearsDiff} ${pluralFormIfnecessary(yearsDiff, 'year')}`;
+  } else if (timeDiffInDays > 29) {
+    const monthsDiff = Math.round(timeDiffInDays / 30);
+    return `${monthsDiff} ${pluralFormIfnecessary(monthsDiff, 'month')}`;
+  } else if (timeDiffInDays > 0) {
+    return `${timeDiffInDays} ${pluralFormIfnecessary(timeDiffInDays, 'day')}`;
+  } else {
+    return 'today';
+  }
+};

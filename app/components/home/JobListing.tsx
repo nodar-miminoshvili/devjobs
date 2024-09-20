@@ -1,4 +1,4 @@
-import { countryCodeToFullName } from '@/utils/helperFunctions';
+import { displayPostTime, countryCodeToFullName } from '@/utils/helperFunctions';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,8 +16,10 @@ const JobListing = ({ job }: { job: Job }) => {
         >
           <Image src={job.logo} fill sizes="56px" alt={job.company} className="object-scale-down" />
         </div>
-        <div className="flex gap-3">
-          <p>4d ago</p>*<p>{job.fullTime ? 'Full Time' : 'Part Time'}</p>
+        <div className="flex gap-2 items-center">
+          <p>{displayPostTime(job.postedAt.seconds)}</p>
+          <span className="bg-[--button-highlight] w-2 h-2 rounded-full translate-y-px"></span>
+          <p>{job.fullTime ? 'full' : 'part'} time</p>
         </div>
         <p className="text-xl font-bold text-[var(--text-primary)]">{job.position}</p>
         <p className="font-medium">{job.company}</p>

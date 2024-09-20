@@ -10,7 +10,7 @@ const KeywordsFilter = ({ keywords }: { keywords: string | undefined }) => {
       <SearchIcon className="fill-[var(--text-teritary)] text-xl hidden md:block shrink-0" />
       <input
         type="text"
-        placeholder="Filter by title..."
+        placeholder="Search by title..."
         className="text-lg bg-inherit outline-none placeholder:text-[#8c8f96] w-full"
         name="keywords"
         ref={inputRef}

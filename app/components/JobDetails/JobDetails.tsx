@@ -1,4 +1,4 @@
-import { countryCodeToFullName } from '@/utils/helperFunctions';
+import { displayPostTime, countryCodeToFullName } from '@/utils/helperFunctions';
 import DetailList from './DetailList';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import ApplyButton from './ApplyButton';
@@ -14,10 +14,10 @@ const JobDetails = ({ jobDetails: job, user, isApplied }: Props) => {
     <div className="bg-[var(--background-shade)] rounded-md mt-10 px-5 pt-10 pb-12 md:px-8">
       <div className="md:flex items-center justify-between ">
         <div className="flex flex-col gap-1.5 mb-7 md:mb-0 md:gap-2">
-          <div className="flex gap-3 items-center">
-            <p>5h ago</p>
-            <span>*</span>
-            <p>{job.fullTime ? 'Full Time' : 'Part Time'}</p>
+          <div className="flex gap-2 items-center mb-1">
+            <p>{displayPostTime(job.postedAt.seconds)}</p>
+            <span className="bg-[--button-highlight] w-2 h-2 rounded-full translate-y-px opacity-90"></span>
+            <p>{job.fullTime ? 'full' : 'part'} time</p>
           </div>
           <h1 className="text-[var(--text-primary)] font-bold text-xl md:text-[1.75rem]">
             {job.position}
