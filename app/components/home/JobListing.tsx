@@ -1,8 +1,9 @@
 import { displayPostTime, countryCodeToFullName } from '@/utils/helperFunctions';
 import Image from 'next/image';
 import Link from 'next/link';
+import { LuCheckCircle as Successicon } from 'react-icons/lu';
 
-const JobListing = ({ job }: { job: Job }) => {
+const JobListing = ({ job, appliedAt }: { job: Job; appliedAt?: number }) => {
   return (
     <li>
       <Link
@@ -26,6 +27,13 @@ const JobListing = ({ job }: { job: Job }) => {
         <p className="mt-auto text-[var(--text-teritary)] text-sm font-bold">
           {countryCodeToFullName(job.location)}
         </p>
+
+        {appliedAt && (
+          <p className="ml-auto pt-3 flex items-center text-[--button-highlight] font-medium">
+            <Successicon className="mr-1 text-[--text-primary]" />
+            Applied {displayPostTime(appliedAt)}
+          </p>
+        )}
       </Link>
     </li>
   );

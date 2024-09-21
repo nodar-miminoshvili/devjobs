@@ -26,3 +26,7 @@ type SearchParams = {
   fullTime?: string;
   page?: string;
 };
+
+interface AppliedJob extends Job {
+  appliedAt: number;
+}

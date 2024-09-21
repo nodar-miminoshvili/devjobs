@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const LoggedInUser = ({ user }: { user: DecodedIdToken }) => {
   return (
-    <Link href={'/'} className="">
+    <Link href={'/profile'}>
       <Image
         src={user.picture!}
         alt="avatar"

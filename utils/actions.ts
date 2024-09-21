@@ -3,7 +3,12 @@
 import { cookies } from 'next/headers';
 import admin from '@/firebaseAdmin';
 import { keywordsStrIntoArr } from './helperFunctions';
-import { DocumentReference, FieldValue, Timestamp } from 'firebase-admin/firestore';
+import {
+  DocumentReference,
+  DocumentSnapshot,
+  FieldValue,
+  Timestamp,
+} from 'firebase-admin/firestore';
 
 const JOBS_PER_PAGE = 2;
 const jobsRef = admin.firestore().collection('jobs');
@@ -141,4 +146,33 @@ export const checkIfUserApplied = async (userId: string, jobId: string) => {
   }
 
   return false;
+};
+
+type UserApplications = {
+  jobsApplied: string[];
+  jobsAppliedWithTimestamps: {
+    appliedAt: { seconds: number; nanoseconds: number };
+    appliedJobRef: DocumentReference;
+  }[];
+};
+
+export const getAppliedJobs = async (uid: string) => {
+  const docRef = applicaitonsRef.doc(uid);
+  const docSnap = await docRef.get();
+  const applications = docSnap.data() as UserApplications;
+
+  const jobsByReferencePromises: Promise<DocumentSnapshot>[] =
+    applications.jobsAppliedWithTimestamps.map(applicationDetails =>
+      applicationDetails.appliedJobRef.get()
+    );
+  const resolvedJobsSnap = await Promise.all(jobsByReferencePromises);
+
+  const appliedJobsWithApplicationTimestamp = resolvedJobsSnap.map((jobSnap, idx) => {
+    return {
+      id: jobSnap.id,
+      ...jobSnap.data(),
+      appliedAt: applications.jobsAppliedWithTimestamps[idx].appliedAt.seconds,
+    };
+  });
+  return appliedJobsWithApplicationTimestamp;
 };
