@@ -58,7 +58,7 @@
 
 @layer components {
   .themeSwitcher li {
-    @apply p-1.5 w-6 h-6 rounded-full grid place-content-center hover:bg-indigo-300 hover:text-yellow-300 transition-colors;
+    @apply p-1 w-7 h-7 rounded-full grid place-content-center hover:bg-indigo-300 hover:text-yellow-300 transition-colors;
   }
   .themeSwitcher li.active {
     @apply bg-indigo-400 text-yellow-400;

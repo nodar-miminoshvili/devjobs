@@ -15,6 +15,7 @@ const KeywordsFilter = ({ keywords }: { keywords: string | undefined }) => {
         name="keywords"
         ref={inputRef}
         defaultValue={keywords}
+        autoComplete="off"
         onChange={e =>
           e.target.value ? setInputCanBeResseted(true) : setInputCanBeResseted(false)
         }
