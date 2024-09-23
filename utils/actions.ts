@@ -9,6 +9,7 @@ import {
   FieldValue,
   Timestamp,
 } from 'firebase-admin/firestore';
+import { notFound } from 'next/navigation';
 
 const JOBS_PER_PAGE = 2;
 const jobsRef = admin.firestore().collection('jobs');
@@ -56,6 +57,9 @@ export const generateQueryRef = async (searchParams: SearchParams) => {
 export const handleQuerySearch = async (searchParams: SearchParams) => {
   const currentPage = searchParams.page ? Number(searchParams.page) : 1;
 
+  const totalPages = await calculatePageCount(searchParams);
+  if (currentPage > totalPages) notFound();
+
   let queryRef = await generateQueryRef(searchParams);
 
   const lastDoc = await getLastDocumentRecursively(queryRef, currentPage);
@@ -95,6 +99,9 @@ const getLastDocumentRecursively = async (
 
 export const getJobDetailsById = async (jobId: string) => {
   const docSnap = await jobsRef.doc(jobId).get();
+
+  if (!docSnap.exists) notFound();
+
   const job = { ...docSnap.data(), id: docSnap.id } as Job;
   return job;
 };

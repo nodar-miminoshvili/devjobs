@@ -14,7 +14,7 @@ const Header = ({ theme }: { theme: Theme }) => {
     >
       <div className="container px-5 pt-6 md:px-16 md:pt-10 flex justify-between items-center">
         <Link href="/">
-          <Image src={Logo} alt="Devjobs" />
+          <Image src={Logo} alt="Devjobs" priority />
         </Link>
         <ThemeSwitcher theme={theme} />
         <Suspense fallback={<ProfileButtonLoader />}>

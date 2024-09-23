@@ -1,6 +1,6 @@
 import admin from '@/firebaseAdmin';
 import Image from 'next/image';
-import Logout from '../Logout';
+import Logout from './Logout';
 
 const UserDetails = async ({ uid }: { uid: string }) => {
   const { displayName, photoURL, email } = await admin.auth().getUser(uid);
