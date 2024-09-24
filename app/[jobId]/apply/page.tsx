@@ -5,6 +5,16 @@ import { countryCodeToFullName } from '@/utils/helperFunctions';
 import { MdLocationOn as Locationicon } from 'react-icons/md';
 import { LuClock4 as ClockIcon } from 'react-icons/lu';
 import Image from 'next/image';
+import { Metadata } from 'next/types';
+import { ApplicationPageMetadataGenerator } from '@/lib/metadataGenerators';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { jobId: string };
+}): Promise<Metadata> {
+  return ApplicationPageMetadataGenerator(params.jobId);
+}
 
 const ApplyPage = async ({ params }: { params: { jobId: string } }) => {
   const user = await getUserFromCookie();

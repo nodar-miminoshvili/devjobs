@@ -2,6 +2,13 @@ import { getUserFromCookie } from '@/utils/actions';
 import { redirect } from 'next/navigation';
 import UserDetails from '../components/Profile/UserDetails';
 import UserApplications from '../components/Profile/UserApplications';
+import { Metadata } from 'next/types';
+import metadataDetails from '@/lib/metadataDetails';
+
+export const metadata: Metadata = {
+  title: metadataDetails.profilePage.title,
+  description: metadataDetails.profilePage.description,
+};
 
 const ProfilePage = async () => {
   const user = await getUserFromCookie();

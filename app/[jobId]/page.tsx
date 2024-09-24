@@ -2,6 +2,16 @@ import CompanyBanner from '../components/JobDetails/CompanyBanner';
 import JobDetails from '../components/JobDetails/JobDetails';
 import { checkIfUserApplied, getJobDetailsById, getUserFromCookie } from '@/utils/actions';
 import JobDetailsFooter from '../components/JobDetails/JobDetailsFooter';
+import { Metadata } from 'next/types';
+import { jobDetailsPageMetadataGenerator } from '@/lib/metadataGenerators';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { jobId: string };
+}): Promise<Metadata> {
+  return jobDetailsPageMetadataGenerator(params.jobId);
+}
 
 const JobPage = async ({ params }: { params: { jobId: string } }) => {
   const user = await getUserFromCookie();

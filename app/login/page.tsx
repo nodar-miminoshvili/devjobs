@@ -2,6 +2,13 @@ import { getUserFromCookie } from '@/utils/actions';
 import GithubLoginButton from '../components/login/GithubLoginButton';
 import GoogleLoginButton from '../components/login/GoogleLoginButton';
 import { redirect } from 'next/navigation';
+import metadataDetails from '@/lib/metadataDetails';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+  title: metadataDetails.loginPage.title,
+  description: metadataDetails.loginPage.description,
+};
 
 const LoginPage = async () => {
   const user = await getUserFromCookie();
