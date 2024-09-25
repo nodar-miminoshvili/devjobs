@@ -15,7 +15,13 @@ const JobListing = ({ job, appliedAt }: { job: Job; appliedAt?: number }) => {
           className="w-14 h-14 rounded-md absolute grid place-content-center top-0 -translate-y-1/2 "
           style={{ backgroundColor: job.logoBackground }}
         >
-          <Image src={job.logo} fill sizes="56px" alt={job.company} className="object-scale-down" />
+          <Image
+            src={job.logo}
+            fill
+            sizes="36px"
+            alt={job.company}
+            className="w-fit h-auto py-3 px-2"
+          />
         </div>
         <div className="flex gap-2 items-center">
           <p>{displayPostTime(job.postedAt.seconds)}</p>
