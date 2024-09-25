@@ -44,7 +44,7 @@ const ApplyPage = async ({ params }: { params: { jobId: string } }) => {
               src={job.logo}
               alt={job.company}
               fill
-              className="object-scale-down"
+              className="object-scale-down fade-in"
               sizes="56px"
             />
           </div>

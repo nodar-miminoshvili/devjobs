@@ -27,7 +27,7 @@ const CompanyBanner = ({ companyDetails }: Props) => {
           alt={company}
           fill
           sizes="(max-width: 768px) 56px, 104px"
-          className="object-scale-down md:object-contain md:p-5"
+          className="object-scale-down md:object-contain md:p-5 fade-in"
         />
       </div>
       <div className="text-center pt-12 md:pt-0 md:text-left">

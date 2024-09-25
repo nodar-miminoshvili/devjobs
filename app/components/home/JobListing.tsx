@@ -20,7 +20,7 @@ const JobListing = ({ job, appliedAt }: { job: Job; appliedAt?: number }) => {
             fill
             sizes="36px"
             alt={job.company}
-            className="w-fit h-auto py-3 px-2"
+            className="object-scale-down fade-in"
           />
         </div>
         <div className="flex gap-2 items-center">
