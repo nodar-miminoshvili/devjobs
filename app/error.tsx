@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { PiMaskSadFill as SadFaceIcon } from 'react-icons/pi';
@@ -36,9 +36,9 @@ const ErrorPage = ({ reset }: { reset: () => void }) => {
             Try Again
           </button>
           <span className="font-medium">OR</span>
-          <Link href="/" className="ApplyButton text-xl font-bold text-[--text-primary] text-white">
+          <a href="/" className="ApplyButton text-xl font-bold text-[--text-primary] text-white">
             Visit Homepage
-          </Link>
+          </a>
         </div>
       </div>
     </>

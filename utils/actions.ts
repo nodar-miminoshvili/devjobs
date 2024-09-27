@@ -11,7 +11,7 @@ import {
 } from 'firebase-admin/firestore';
 import { notFound } from 'next/navigation';
 
-const JOBS_PER_PAGE = 2;
+const JOBS_PER_PAGE = 9;
 const jobsRef = admin.firestore().collection('jobs');
 const applicaitonsRef = admin.firestore().collection('applications');
 
@@ -44,7 +44,7 @@ export async function getUserFromCookie() {
 export const generateQueryRef = async (searchParams: SearchParams) => {
   const { keywords, location, fullTime } = searchParams;
 
-  let queryRef = jobsRef.orderBy('idx');
+  let queryRef = jobsRef.orderBy('postedAt', 'desc');
 
   if (keywords)
     queryRef = queryRef.where('keywords', 'array-contains-any', keywordsStrIntoArr(keywords));
@@ -64,7 +64,9 @@ export const handleQuerySearch = async (searchParams: SearchParams) => {
 
   const lastDoc = await getLastDocumentRecursively(queryRef, currentPage);
 
-  queryRef = queryRef.startAfter(lastDoc).limit(JOBS_PER_PAGE);
+  queryRef = lastDoc
+    ? queryRef.startAfter(lastDoc).limit(JOBS_PER_PAGE)
+    : queryRef.limit(JOBS_PER_PAGE);
 
   const querySnapshot = await queryRef.get();
   return { querySnapshot };
@@ -73,7 +75,8 @@ export const handleQuerySearch = async (searchParams: SearchParams) => {
 export const calculatePageCount = async (searchParams: SearchParams) => {
   const queryRef = await generateQueryRef(searchParams);
   const totalCount = await queryRef.count().get();
-  const totalPages = Math.round(totalCount.data().count / JOBS_PER_PAGE);
+  if (totalCount.data().count === 0) return 1;
+  const totalPages = Math.ceil(totalCount.data().count / JOBS_PER_PAGE);
 
   return totalPages;
 };

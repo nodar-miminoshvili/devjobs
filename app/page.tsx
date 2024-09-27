@@ -13,7 +13,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
       <Suspense
         key={generateSuspenseKeys(searchParams, 'job-list')}
-        fallback={<JobListLoader placeholdersToRender={2} />}
+        fallback={<JobListLoader placeholdersToRender={9} />}
       >
         <JobList searchParams={searchParams} />
       </Suspense>
