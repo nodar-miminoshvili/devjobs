@@ -44,6 +44,11 @@
   body {
     @apply bg-[var(--base-background)] transition-colors origin-top;
   }
+
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--button-highlight) var(--base-background);
+  }
 }
 
 @layer utilities {
