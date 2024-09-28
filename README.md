@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Devjobs ⌨️ - Fullstack Job Board Website
 
-## Getting Started
+This is a full-stack web application for browsing and applying to job listings. It is built with **Next.js**, **TypeScript**, and **Tailwind CSS** and is based on the [Devjobs web app challenge](https://www.frontendmentor.io/challenges/Devjobs-web-app-HuvC_LP4l) from Frontend Mentor, with additional features like user authentication and a profile page.
 
-First, run the development server:
+## Live Demo 👁️
+View the live demo at **[jobs-dev.vercel.app](https://jobs-dev.vercel.app/)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Responsive Design**: Adapts to different screen sizes for a consistent user experience.
+- **Dark Mode**: Supports light, dark, and system default themes.
+- **User Authentication**: Managed through **Firebase Authentication**.
+- **Firestore Database**: Stores job listings and user data.
+- **Job Search**: Search by keywords and filter by location and job type.
+- **Server-Side Searching, Filtering and Pagination**: Handled on the server for performance.
+- **Job Application**: Apply for jobs directly through the platform.
+- **Profile Page**: Users can view applied jobs.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Frontend**: Next.js, TypeScript, Tailwind CSS
+- **Database**: Firebase Firestore
+- **Authentication**: Firebase Authentication
+- **Hosting**: Vercel
 
-## Learn More
+## Screenshot :camera:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![devjobs-screenshot](https://github.com/user-attachments/assets/4000fb43-5b77-4627-a484-57bb927d44ec)
