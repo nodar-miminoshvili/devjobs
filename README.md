@@ -1,6 +1,6 @@
 ## Devjobs ⌨️ - Fullstack Job Board Website
 
-This is a full-stack web application for browsing and applying to job listings. It is built with **Next.js**, **TypeScript**, and **Tailwind CSS** and is based on the [Devjobs web app challenge](https://www.frontendmentor.io/challenges/Devjobs-web-app-HuvC_LP4l) from Frontend Mentor, with additional features like user authentication and a profile page.
+This is a full-stack web application for browsing and applying to job listings. It is built with **Next.js**, **TypeScript**, and **Tailwind CSS** and is based on the [Devjobs web app challenge](https://www.frontendmentor.io/challenges/devjobs-web-app-HuvC_LP4l) from Frontend Mentor, with additional features like user authentication and a profile page.
 
 ## Live Demo 👁️
 View the live demo at **[jobs-dev.vercel.app](https://jobs-dev.vercel.app/)**
@@ -23,6 +23,13 @@ View the live demo at **[jobs-dev.vercel.app](https://jobs-dev.vercel.app/)**
 - **Authentication**: Firebase Authentication
 - **Hosting**: Vercel
 
-## Screenshot :camera:
+## Screenshots :camera:
 
 ![devjobs-screenshot](https://github.com/user-attachments/assets/4000fb43-5b77-4627-a484-57bb927d44ec)
+
+
+![jobDetails](https://github.com/user-attachments/assets/d6178d29-7618-426c-8699-17dae6630d50)
+
+
+![application](https://github.com/user-attachments/assets/4b16a0ed-89f1-4ced-a944-194ee55c3118)
+
